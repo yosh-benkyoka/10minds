@@ -492,7 +492,7 @@
             body{transition:background 1.6s ease, color 1.6s ease}
             body.night{background:#23201C;color:#EDE6D6}
             body.night .logo{color:#EDE6D6}
-            body.night .byline{color:#C9A227}
+            body.night .byline{color:#8A857C}
             body.night .hint{color:#B3A88F}
             body.night h2{color:#EDE6D6}
             body.night .view{background:#2C2823;border-color:#3A342C;box-shadow:0 6px 18px rgba(0,0,0,.45)}
@@ -521,7 +521,7 @@
                 body.night, body { background: #fff !important; color: #17171A !important; }
                 body.night .progress, body.night .btn-primary, body.night .back,
                 body.night .footer-note, body.night #allminds, body.night .hint,
-                body.night #aboutFig { display: none !important; }
+                body.night #aboutFig, body.night #blend, body.night .three-head { display: none !important; }
                 #intro, #quiz { display: none !important; }
                 #result { display: block !important; }
                 .wrap { max-width: 100%; padding: 0 !important; }
@@ -537,7 +537,11 @@
                 body.night .view .from { color: #6E6E68 !important; }
                 body.night .view .jname { color: #6E6E68 !important; }
                 body.night .view p { color: #17171A !important; font-size: 13px !important; line-height: 1.95 !important; }
-                .printSheet { display: block !important; page-break-inside: avoid; }
+                .printSheet { display: block !important; }
+                .printSheet .print-mind { page-break-inside: avoid; margin-top: 16px; padding-top: 14px; border-top: 1px solid #D8D8D2; }
+                .printSheet .print-mind:first-child { border-top: none; margin-top: 8px; }
+                .printSheet .print-mind-name { font-weight: 800; font-size: 15px; color: #17171A; margin-bottom: 2px; }
+                .printSheet .print-jname { font-weight: 500; font-size: 10.5px; color: #6E6E68; margin-left: 8px; }
                 .printSheet .duo { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0 0; }
                 .printSheet .duo > div { background: #F4F4F0 !important; color: #17171A !important;
                         border-radius: 10px; padding: 11px 13px; font-size: 11.5px; line-height: 1.8; }
@@ -1304,15 +1308,19 @@
                 }).join("");
 
 
-                /* 十住心の一覧(開閉式) */
-                const _pk = homeSeat(score), _pm = MINDS[_pk], _pa = _pk === 10 ? "#17171A" : HUES[_pk];
-                document.getElementById("printSheet").innerHTML = `
-                    <div class="duo">
-                      <div><b style="color:${_pa};display:block;font-weight:800;margin-bottom:4px">光</b>${_pm.light}</div>
-                      <div><b style="color:#6E6E68;display:block;font-weight:800;margin-bottom:4px">影</b>${_pm.shadow}</div>
-                    </div>
-                    <div class="plabel" style="color:${_pa}">影への実践</div>
-                    <ul class="practice">${_pm.practices.map((p) => `<li>${p.replace(/（第[^）]*）/g, "")}</li>`).join("")}</ul>`;
+                /* 印刷用シート: 三つの心すべての光・影・実践 */
+                document.getElementById("printSheet").innerHTML = t3.map((k) => {
+                    const m = MINDS[k], ac = "#17171A";
+                    return `<div class="print-mind">
+                      <div class="print-mind-name">${m.name}<span class="print-jname">第${m.kanji}住心・${m.jname}</span></div>
+                      <div class="duo">
+                        <div><b style="color:${ac};display:block;font-weight:800;margin-bottom:4px">光</b>${m.light}</div>
+                        <div><b style="color:#6E6E68;display:block;font-weight:800;margin-bottom:4px">影</b>${m.shadow}</div>
+                      </div>
+                      <div class="plabel" style="color:${ac}">影への実践</div>
+                      <ul class="practice">${m.practices.map((p) => `<li>${p.replace(/（第[^）]*）/g, "")}</li>`).join("")}</ul>
+                    </div>`;
+                }).join("");
 
                 document.getElementById("allminds").innerHTML =
                     `<h2>十住心をすべて見る</h2>` +
