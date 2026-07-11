@@ -1,0 +1,1485 @@
+<!doctype html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>10MINDS by 十住心論</title>
+        <style>
+            :root {
+                --paper: #fafaf7;
+                --ink: #17171a;
+                --gray: #6e6e68;
+                --line: #e7e7e2;
+                --soft: #f1f1ec;
+                --c1: #ff5252;
+                --c2: #ff9500;
+                --c3: #ffc400;
+                --c4: #38b000;
+                --c5: #00bfa5;
+                --c6: #2979ff;
+                --c7: #6c4df6;
+                --c8: #b620e0;
+                --c9: #f52ea4;
+                --c10: #17171a;
+                --gothic:
+                    "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic",
+                    "Noto Sans JP", sans-serif;
+                --mincho:
+                    "Hiragino Mincho ProN", "Yu Mincho", "Noto Serif JP", serif;
+                --en: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            }
+            * {
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+            }
+            html {
+                -webkit-text-size-adjust: 100%;
+            }
+            body {
+                background: var(--paper);
+                color: var(--ink);
+                font-family: var(--gothic);
+                font-size: 16px;
+                line-height: 1.9;
+            }
+            .wrap {
+                max-width: 560px;
+                margin: 0 auto;
+                padding: 0 22px 72px;
+            }
+            .screen {
+                display: none;
+            }
+            .screen.active {
+                display: block;
+                animation: fadein 0.4s ease;
+            }
+            @keyframes fadein {
+                from {
+                    opacity: 0;
+                    transform: translateY(8px);
+                }
+                to {
+                    opacity: 1;
+                    transform: none;
+                }
+            }
+            @media (prefers-reduced-motion: reduce) {
+                *,
+                *::before,
+                *::after {
+                    animation: none !important;
+                    transition: none !important;
+                }
+            }
+
+            /* ---------- progress: ten-hue gradient ---------- */
+            .progress {
+                position: sticky;
+                top: 0;
+                height: 5px;
+                background: var(--line);
+                z-index: 10;
+            }
+            .progress > div {
+                height: 100%;
+                width: 0%;
+                transition: width 0.3s ease;
+                background: #C9A227;
+            }
+
+            /* ---------- logo ---------- */
+            .logo {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 0;
+                margin: 64px 0 4px;
+                font-family: var(--en);
+                font-weight: 800;
+                font-size: 56px;
+                letter-spacing: -0.02em;
+                color: var(--ink);
+            }
+            .logo .ring {
+                width: 44px;
+                height: 44px;
+                border-radius: 50%;
+                flex: 0 0 auto;
+                margin: 0 8px 0 0;
+                background: #C9A227;
+                -webkit-mask: radial-gradient(
+                    farthest-side,
+                    transparent 58%,
+                    #000 60%
+                );
+                mask: radial-gradient(farthest-side, transparent 58%, #000 60%);
+            }
+            .logo .sr {
+                position: absolute;
+                width: 1px;
+                height: 1px;
+                overflow: hidden;
+                clip: rect(0 0 0 0);
+                white-space: nowrap;
+            }
+            .byline {
+                text-align: center;
+                font-size: 14px;
+                font-weight: 700;
+                letter-spacing: 0.24em;
+                padding-left: 0.24em;
+                color: var(--gray);
+                margin-bottom: 26px;
+            }
+            .dots {
+                display: flex;
+                justify-content: center;
+                gap: 9px;
+                margin: 26px 0 34px;
+            }
+            .dots i {
+                width: 11px;
+                height: 11px;
+                border-radius: 50%;
+                display: block;
+                box-shadow: inset 0 0 0 1px rgba(23, 23, 26, 0.15);
+            }
+
+            h1 {
+                font-size: 22px;
+                font-weight: 800;
+                text-align: center;
+                letter-spacing: 0.03em;
+            }
+            .lede {
+                font-size: 15px;
+                line-height: 2.1;
+                color: var(--ink);
+            }
+            .lede b {
+                font-weight: 800;
+                background: linear-gradient(transparent 68%, #ffe44d 68%);
+            }
+            .note {
+                font-size: 12px;
+                color: var(--gray);
+                margin-top: 22px;
+                line-height: 1.9;
+            }
+
+            /* ---------- buttons ---------- */
+            button {
+                font-family: var(--gothic);
+                cursor: pointer;
+                border: none;
+                border-radius: 12px;
+                -webkit-tap-highlight-color: transparent;
+            }
+            button:focus-visible {
+                outline: 3px solid var(--c6);
+                outline-offset: 3px;
+            }
+            .btn-primary {
+                display: block;
+                width: 100%;
+                margin: 34px 0 0;
+                padding: 17px;
+                background: var(--ink);
+                color: #fff;
+                font-size: 16px;
+                font-weight: 800;
+                letter-spacing: 0.22em;
+                padding-left: 0.22em;
+            }
+            .btn-primary:active {
+                transform: translateY(1px);
+            }
+            .btn-ghost {
+                background: none;
+                color: var(--gray);
+                font-size: 13px;
+                padding: 8px 4px;
+                text-decoration: underline;
+                text-underline-offset: 4px;
+            }
+
+            /* ---------- quiz ---------- */
+            .qhead {
+                display: flex;
+                justify-content: space-between;
+                align-items: baseline;
+                margin: 36px 0 8px;
+            }
+            .qcount {
+                font-family: var(--en);
+                font-weight: 800;
+                font-size: 15px;
+                letter-spacing: 0.04em;
+            }
+            .qtext {
+                font-size: 19px;
+                font-weight: 700;
+                line-height: 1.95;
+                min-height: 120px;
+                display: flex;
+                align-items: center;
+                margin-bottom: 26px;
+            }
+            .opts {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
+            .opt {
+                width: 100%;
+                min-height: 54px;
+                padding: 13px 18px;
+                text-align: left;
+                background: #fff;
+                color: var(--ink);
+                font-size: 15px;
+                font-weight: 600;
+                border: 2px solid var(--line);
+                border-radius: 12px;
+                transition:
+                    border-color 0.12s,
+                    background 0.12s;
+            }
+            .opt:hover {
+                border-color: #c9c9c2;
+            }
+            .opt.picked {
+                border-color: var(--ink);
+                background: var(--ink);
+                color: #fff;
+            }
+            .opt small {
+                color: var(--gray);
+                font-size: 12px;
+                margin-right: 12px;
+                font-family: var(--en);
+                font-weight: 800;
+            }
+            .opt.picked small {
+                color: #fff;
+            }
+            .kbd-hint {
+                font-size: 11px;
+                color: var(--gray);
+                margin-top: 20px;
+                display: block;
+            }
+
+            /* ---------- result ---------- */
+            h2 {
+                font-size: 20px;
+                font-weight: 800;
+                letter-spacing: 0.04em;
+                margin: 52px 0 14px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            h2::before {
+                content: "";
+                width: 10px;
+                height: 22px;
+                border-radius: 4px;
+                background: var(--accent, var(--ink));
+                flex: 0 0 auto;
+            }
+            .chart-box {
+                margin: 38px auto 4px;
+                max-width: 370px;
+            }
+            .chart-caption {
+                text-align: center;
+                font-size: 11.5px;
+                color: var(--gray);
+                margin-bottom: 8px;
+            }
+            svg text {
+                font-family: var(--gothic);
+            }
+
+            .legend {
+                margin-top: 22px;
+                border-top: 2px solid var(--ink);
+            }
+            .legend-row {
+                display: grid;
+                grid-template-columns: 14px 9.5em 1fr 2.6em;
+                gap: 10px;
+                align-items: center;
+                padding: 10px 0;
+                border-bottom: 1px solid var(--line);
+                font-size: 13px;
+            }
+            .legend-row .dot {
+                width: 11px;
+                height: 11px;
+                border-radius: 50%;
+                box-shadow: inset 0 0 0 1px rgba(23, 23, 26, 0.15);
+            }
+            .legend-row .vname {
+                font-weight: 600;
+                color: var(--ink);
+            }
+            .legend-row.hot .vname {
+                font-weight: 800;
+            }
+            .legend-row.hot {
+                background: linear-gradient(90deg, var(--soft), transparent);
+            }
+            .bar {
+                height: 7px;
+                background: var(--soft);
+                border-radius: 4px;
+                overflow: hidden;
+            }
+            .bar > div {
+                height: 100%;
+                border-radius: 4px;
+                box-shadow: inset 0 0 0 1px rgba(23, 23, 26, 0.12);
+            }
+            .legend-row .score {
+                text-align: right;
+                font-family: var(--en);
+                font-weight: 800;
+                color: var(--ink);
+            }
+
+            .card {
+                background: #fff;
+                border: 1.5px solid var(--line);
+                border-radius: 18px;
+                padding: 24px 22px;
+                margin-top: 14px;
+                box-shadow: 0 2px 10px rgba(23, 23, 26, 0.04);
+            }
+            .chip {
+                display: inline-block;
+                font-size: 11px;
+                font-weight: 800;
+                letter-spacing: 0.14em;
+                padding: 4px 12px;
+                border-radius: 999px;
+                color: #fff;
+                margin-bottom: 12px;
+                box-shadow: inset 0 0 0 1.5px rgba(23, 23, 26, 0.12);
+            }
+            .card h3 {
+                font-size: 21px;
+                font-weight: 800;
+                letter-spacing: 0.04em;
+            }
+            .card .jname {
+                font-size: 12.5px;
+                color: var(--gray);
+                font-weight: 600;
+                margin: 2px 0 12px;
+            }
+            .sho {
+                font-family: var(--mincho);
+                font-size: 13.5px;
+                line-height: 2;
+                color: var(--ink);
+                border-left: 3px solid var(--accent, var(--ink));
+                padding: 2px 0 2px 14px;
+                margin: 12px 0 14px;
+            }
+            .sho cite {
+                display: block;
+                font-style: normal;
+                font-size: 10.5px;
+                color: var(--gray);
+                margin-top: 4px;
+                font-family: var(--gothic);
+            }
+            .card p {
+                font-size: 14px;
+                line-height: 2;
+                margin-bottom: 12px;
+            }
+            .duo {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 12px;
+                margin: 14px 0;
+            }
+            @media (max-width: 420px) {
+                .duo {
+                    grid-template-columns: 1fr;
+                }
+            }
+            .duo > div {
+                background: var(--soft);
+                border-radius: 12px;
+                padding: 12px 14px;
+                font-size: 13px;
+                line-height: 1.9;
+            }
+            .duo b {
+                display: block;
+                font-weight: 800;
+                font-size: 12px;
+                margin-bottom: 4px;
+            }
+            .plabel {
+                font-weight: 800;
+                font-size: 13px;
+                margin-top: 14px;
+            }
+            .practice {
+                margin-top: 6px;
+            }
+            .practice li {
+                font-size: 13.5px;
+                line-height: 1.95;
+                margin: 6px 0 6px 1.25em;
+            }
+            .quote {
+                font-family: var(--mincho);
+                margin-top: 16px;
+                padding-top: 16px;
+                border-top: 1px solid var(--line);
+                font-size: 14px;
+                line-height: 2;
+            }
+            .quote cite {
+                display: block;
+                font-style: normal;
+                font-size: 11px;
+                color: var(--gray);
+                margin-top: 6px;
+                font-family: var(--gothic);
+            }
+            .warn {
+                border: 2px solid var(--c3);
+                border-radius: 14px;
+                padding: 14px 18px;
+                font-size: 13px;
+                font-weight: 600;
+                margin-top: 18px;
+                line-height: 1.9;
+                background: #fffbea;
+            }
+            .footer-note {
+                font-size: 11px;
+                color: var(--gray);
+                margin-top: 38px;
+                line-height: 1.9;
+                text-align: center;
+            }
+
+            /* ---------- 曼荼羅ビュー ---------- */
+            .hint{text-align:center;font-size:11px;color:var(--gray);margin:2px 0 4px;line-height:1.8}
+            .seat{cursor:pointer}
+            .seat:focus{outline:none}
+            .view{background:#fff;border:1.5px solid var(--line);border-radius:18px;padding:22px;margin-top:14px;box-shadow:0 2px 10px rgba(23,23,26,.04);border-top:4px solid var(--accent,#17171A)}
+            .view .from{font-size:11px;font-weight:800;letter-spacing:.2em;color:var(--gray);margin-bottom:8px}
+            .view h3{font-size:19px;font-weight:800;margin-bottom:2px}
+            .view .jname{font-size:12px;color:var(--gray);margin-bottom:12px}
+            .view p{font-size:14.5px;line-height:2.1}
+            .back{margin-top:14px;background:none;border:none;color:var(--gray);font-size:12.5px;text-decoration:underline;text-underline-offset:4px;cursor:pointer;font-family:var(--gothic)}
+        </style>
+        <style>
+            /* ===== 第二幕: 結果画面のみ墨×金(body.night) ===== */
+            :root{ --mincho:"Hiragino Mincho ProN","Yu Mincho","Noto Serif JP",serif; }
+            body{transition:background 1.6s ease, color 1.6s ease}
+            body.night{background:#23201C;color:#EDE6D6}
+            body.night .logo{color:#EDE6D6}
+            body.night .byline{color:#C9A227}
+            body.night .hint{color:#B3A88F}
+            body.night h2{color:#EDE6D6}
+            body.night .view{background:#2C2823;border-color:#3A342C;box-shadow:0 6px 18px rgba(0,0,0,.45)}
+            body.night .view .from{color:#C9A227}
+            body.night .view .jname{color:#B3A88F}
+            body.night .view p{font-family:var(--mincho);font-size:15px;line-height:2.25;color:#EDE6D6}
+            body.night .back{color:#B3A88F}
+            body.night .card{background:#2C2823;border-color:#3A342C;box-shadow:0 4px 14px rgba(0,0,0,.4)}
+            body.night .card p, body.night .card summary{color:#EDE6D6}
+            body.night .card .jname{color:#B3A88F}
+            body.night .duo > div{background:#35302A;color:#EDE6D6}
+            body.night .quote{font-family:var(--mincho);color:#EDE6D6;border-top-color:#3A342C}
+            body.night .quote cite{color:#B3A88F}
+            body.night .practice li{color:#EDE6D6}
+            body.night .warn{background:#35302A;color:#EDE6D6;border-color:#8A7434}
+            body.night .footer-note{color:#B3A88F}
+            @media (prefers-reduced-motion:reduce){ body{transition:none} }
+        </style>
+        <style>
+            /* ===== 印刷: A4一枚の記録シート ===== */
+            @media print {
+                @page { size: A4 portrait; margin: 12mm; }
+                /* 色と背景を確実に印刷させる */
+                html, body { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+                /* body.night より詳細度を上げる */
+                body.night, body { background: #fff !important; color: #17171A !important; }
+                body.night .progress, body.night .btn-primary, body.night .back,
+                body.night .footer-note, body.night #allminds, body.night .hint,
+                body.night #aboutFig { display: none !important; }
+                #intro, #quiz { display: none !important; }
+                #result { display: block !important; }
+                .wrap { max-width: 100%; padding: 0 !important; }
+                body.night .logo { color: #17171A !important; font-size: 32px !important; margin: 0 0 2px !important; }
+                body.night .logo .ring { width: 26px !important; height: 26px !important; }
+                body.night .byline { color: #6E6E68 !important; margin-bottom: 8px !important; }
+                /* 曼荼羅は闇のカードとして刷る */
+                .chart-box { max-width: 340px !important; margin: 0 auto 14px !important;
+                             background: #23201C !important; border-radius: 16px; padding: 10px; }
+                .chart-box svg text[font-size="7.5"] { font-size: 9px !important; }
+                body.night .view { background: #fff !important; border: 1.5px solid #D8D8D2 !important;
+                        box-shadow: none !important; page-break-inside: avoid; padding: 16px 18px !important; }
+                body.night .view .from { color: #6E6E68 !important; }
+                body.night .view .jname { color: #6E6E68 !important; }
+                body.night .view p { color: #17171A !important; font-size: 13px !important; line-height: 1.95 !important; }
+                .printSheet { display: block !important; page-break-inside: avoid; }
+                .printSheet .duo { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0 0; }
+                .printSheet .duo > div { background: #F4F4F0 !important; color: #17171A !important;
+                        border-radius: 10px; padding: 11px 13px; font-size: 11.5px; line-height: 1.8; }
+                .printSheet .plabel { font-weight: 800; font-size: 12px; margin-top: 12px; }
+                .printSheet .practice { margin-top: 4px; }
+                .printSheet .practice li { color: #17171A !important; font-size: 11.5px; line-height: 1.8; margin-left: 1.1em; }
+                .printFoot { display: block !important; margin-top: 20px; font-size: 9px; color: #6E6E68; text-align: center; }
+            }
+            .printSheet, .printFoot { display: none }
+            body.printing .screen:not(#result) { display: none !important }
+        </style>
+        <style>
+            body.night .progress { display: none !important; }
+        </style>
+        <style>
+            @media (max-width: 360px) {
+                h1 { font-size: 20px; letter-spacing: 0.02em; }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="progress" aria-hidden="true"><div id="pbar"></div></div>
+        <div class="wrap">
+            <!-- 導入 -->
+            <section id="intro" class="screen active">
+                <div class="logo">
+                    1<span class="ring" aria-hidden="true"></span
+                    ><span class="sr">0</span>MINDS
+                </div>
+                <p class="byline">by 空海『十住心論』</p>
+                <h1>あなたの心は、いまどこに？</h1>
+                <p class="lede" style="margin-top:26px">これは、優劣をつけるテストではありません。<br><br>
+                    いまから約1200年前、空海は『十住心論』で、人の心が開いていく<b>10のグラデーション</b>を描きました。それは、日によって、場面によって、大きく変わるものです。<br><br>
+                    32の質問に、「理想の自分」ではなく<b>「この一ヶ月の実際の自分」</b>で答えてください。正解はありません。終わったとき、あなたの心の今の場所が浮かびあがってきます。（所要時間 約5分）</p>
+                <button class="btn-primary" onclick="startQuiz()">
+                    はじめる
+                </button>
+                <p class="note" style="font-size: 11px">
+                    回答は匿名のまま、統計データとして送信されます。氏名・連絡先など、個人を特定する情報は一切含まれません。結果はこの画面だけに表示され、ページを閉じると消えます。
+                </p>
+                <p class="footer-note" style="margin-top: 16px; font-size: 11px; text-align: left">
+                    このアプリは勉強家の兼松佳宏の試作品です。掲載情報は探究中のメモのようなものであり、学術的に保証されているわけではありません。あくまでひとつのアイデアとして、お楽しみください。
+                </p>
+            </section>
+
+            <!-- 設問 -->
+            <section id="quiz" class="screen">
+                <div class="qhead">
+                    <span class="qcount" id="qcount"></span>
+                    <button class="btn-ghost" id="backBtn" onclick="goBack()">
+                        ← ひとつ戻る
+                    </button>
+                </div>
+                <div class="qtext" id="qtext"></div>
+                <div class="opts" id="opts"></div>
+                <span class="kbd-hint">キーボードの 1〜5 でも回答できます</span>
+            </section>
+
+            <!-- 結果 -->
+            <section id="result" class="screen">
+                <div class="logo" style="font-size: 40px; margin-top: 48px">
+                    1<span class="ring" style="width: 32px; height: 32px; margin: 0 6px 0 0"></span
+                    >MINDS
+                </div>
+                <p class="byline">いま、あなたの心がいる場所</p>
+                <div id="lwarn"></div>
+                <div class="chart-box">
+                    <div id="chart"></div>
+                </div>
+                <p class="hint" style="margin-top:6px">
+                    <button class="btn-ghost" style="font-size:12px;color:#EDE6D6;text-decoration:none;display:inline-flex;align-items:center;gap:7px" onclick="document.getElementById('aboutFig').style.display = document.getElementById('aboutFig').style.display==='none' ? 'block' : 'none'">
+                        <span style="display:inline-flex;align-items:center;justify-content:center;width:17px;height:17px;border:1.3px solid #EDE6D6;border-radius:50%;font-size:10.5px;font-weight:800;font-style:normal">i</span>
+                        <span style="text-decoration:underline;text-underline-offset:4px">この図の見方について</span>
+                    </button>
+                </p>
+                <div class="card" id="aboutFig" style="display:none;font-size:13px">
+                    <p style="font-size:13px;line-height:2">これは、優劣をつけるテストではありません。<br><br>
+                    いまから約1200年前、空海は『十住心論』で、人の心が開いていく10のグラデーションを描きました。それは、日によって、場面によって、大きく変わるものです。<br><br>
+                    十の心は誰の中にもすべてあり、いま大きくはたらいている心が明るく灯っています。暗い場所は「劣っている」のではなく、いまは静かにしているだけ ― 季節がめぐれば、灯りの場所も変わります。この診断は成績表ではなく、いまのあなたの空模様です。</p>
+                </div>
+                <div class="view" id="view"></div>
+                <div style="display: flex; gap: 10px; margin-top: 34px">
+                    <button
+                        class="btn-primary"
+                        style="
+                            margin-top: 0;
+                            flex: 1;
+                            padding: 15px 8px;
+                            font-size: 14px;
+                            letter-spacing: 0.08em;
+                            padding-left: 0.08em;
+                            background: transparent;
+                            color: #C9A227;
+                            border: 2px solid #C9A227;
+                        "
+                        onclick="saveResultImage()"
+                    >
+                        結果画像を保存
+                    </button>
+                    <button
+                        class="btn-primary"
+                        style="
+                            margin-top: 0;
+                            flex: 1;
+                            padding: 15px 8px;
+                            font-size: 14px;
+                            letter-spacing: 0.08em;
+                            padding-left: 0.08em;
+                            background: transparent;
+                            color: #C9A227;
+                            border: 2px solid #C9A227;
+                        "
+                        onclick="printResult()"
+                    >
+                        印刷・PDF保存
+                    </button>
+                </div>
+                <p class="footer-note" style="margin-top: 10px; font-size: 10.5px">
+                    画像はSNSに、印刷はA4一枚の記録シートに
+                </p>
+                <div class="printSheet" id="printSheet"></div>
+                <p class="printFoot">10MINDS by 十住心論 ― このアプリは勉強家の兼松佳宏の試作品です。10minds.netlify.app</p>
+                <div id="allminds"></div>
+                <button
+                    class="btn-primary"
+                    id="retryBtn"
+                    onclick="location.reload()"
+                >
+                    もう一度はじめから
+                </button>
+                <p class="footer-note">
+                    10MINDS by 十住心論 v4.3(32問)<br /><br />このアプリは勉強家の兼松佳宏の試作品です。掲載情報は探究中のメモのようなものであり、学術的に保証されているわけではありません。あくまでひとつのアイデアとして、お楽しみください。
+                </p>
+            </section>
+        </div>
+        <script>
+            /* ================= データ ================= */
+            const HUES = {1:"#C9A227",2:"#C9A227",3:"#C9A227",4:"#C9A227",5:"#C9A227",6:"#C9A227",7:"#C9A227",8:"#C9A227",9:"#C9A227",10:"#C9A227"};
+            const DARK_TEXT_OK = {}; // 黄色チップは黒文字
+            const EDGE = (k) => HUES[k];
+
+            const MINDS = {
+                1: {
+                    kanji: "一",
+                    name: "一. 欲望に従う心",
+                    jname: "異生羝羊心",
+                    yomi: "いしょうていようしん",
+                    view: "ここから見ると、この世界は欲望を刺激するものばかりです。身体は正直で、力はあり余っている。その生き生きとしたエネルギーが、すべてのはじまりです。",
+                    now: "いま、あなたの中で欲望のはたらきが大きくなっています。それは恥ではなく、すべての心が立ち上がる土台です。空海も十住心の出発点にこの心を置きました。",
+                    light: "生命力と正直さ。行動するエネルギーが沸く。",
+                    shadow: "快楽主義。流されると、一日が消費だけで終わる。",
+                    practices: [
+                        "欲望に従う前に、ひと呼吸だけ置いてみる。",
+                        "誰かのための小さな行為をやってみる（第二へ）。",
+                    ],
+                    quote: "凡夫狂酔して、わが非を悟らず、ただし婬食を念うこと、かの羝羊の如し。",
+                },
+                2: {
+                    kanji: "二",
+                    name: "二. 自らを律する心",
+                    jname: "愚童持斎心",
+                    yomi: "ぐどうじさいしん",
+                    view: "ここから見ると、この世界は守るべきルールや道徳でできています。ふとしたきっかけで、誰かの役に立ちたいと思う。「正しさ」のような何かが、目を覚ましています。",
+                    now: "「誰も見ていなくても、善くありたい」という倫理が、内側から芽生えています。空海はこれを、凍った大地に春の芽が出る瞬間にたとえました。",
+                    light: "誠実さと継続力。まわりから深く信頼される。",
+                    shadow: "規範主義。自分と他人を「正しさ」で裁きはじめる。",
+                    practices: [
+                        "相手にとっての「正しさ」も想像してみる。",
+                        "畏敬を感じる場所（自然）に身を置く（第三へ）。",
+                    ],
+                    quote: "外の因縁によって、たちまちに節食を思う。施心萌動して、穀の縁に遇うが如し",
+                },
+                3: {
+                    kanji: "三",
+                    name: "三. 天に祈る心",
+                    jname: "嬰童無畏心",
+                    yomi: "ようどうむいしん",
+                    view: "ここから見ると、この世界には自分を超えた大きな存在の気配があります。いつか、苦しんでいる自分を救ってくれるはず。その希望に、安らぎを感じています。",
+                    now: "自分を超えた大いなるものへの信頼が、あなたを支えています。空海はこの安らぎを尊びつつ、「まだ仮の無畏」とも呼びました。",
+                    light: "畏敬と委ねる力。祈りのなかで心身が回復する。",
+                    shadow: "依存と現実逃避。「いつか」の救いが「いま」を空洞化する。",
+                    practices: [
+                        "「いつか」ではなく「いま」の自分について書き出してみる。",
+                        "救い主を外に置かず、自分の心を観察する時間を持つ（第四へ）。",
+                    ],
+                    quote: "外道天に生じて、しばらく蘇息を得。かの嬰兒と、犢子との母に隨うがごとし。",
+                },
+                4: {
+                    kanji: "四",
+                    name: "四. 煩悩を払う心",
+                    jname: "唯蘊無我心",
+                    yomi: "ゆいうんむがしん",
+                    view: "ここから見ると、自分を見出す欲望は塵のようなもので、払えばなくなることがわかります。「わたし」への執着がちょっと解けて、冷静に現象を観察する眼が開いています。",
+                    now: "自我を現象として観察し、「私」を静かに解体する眼が開いています。感情に飲まれず、距離を取る力があります。",
+                    light: "客観性と冷静さ。感情と適度な距離を保つ。",
+                    shadow: "過剰な分析。世界が標本になり、体温を失う。",
+                    practices: [
+                        "湧いてきた感情に、名前をつけて眺めてみる。",
+                        "観察の対象を「苦しみが生まれる連鎖」へ広げる（第五へ）。",
+                    ],
+                    quote: "唯し法有を解して、我人みな遮す。羊車の三蔵、ことごとくこの句に摂す。",
+                },
+                5: {
+                    kanji: "五",
+                    name: "五. 煩悩を断つ心",
+                    jname: "拔業因種心",
+                    yomi: "ばつごういんしゅしん",
+                    view: "ここから見ると、世の中の苦しみが生まれてくる背景がわかります。根本的な迷いを洞察し、それを断ち切ろうとする独りの時間が、あなたの道場です。",
+                    now: "因果を見抜き、苦しみの根本から断つ力が働いています。独りの時間があなたの道場です。",
+                    light: "洞察と徹底性。苦しみの根をひとりで断ち切る。",
+                    shadow: "孤高。悟っても語らず、他者への回路を閉ざす。",
+                    practices: [
+                        "誰かの話を、アドバイスしたりせずに傾聴する。",
+                        "あなたの洞察を、誰かのためにいかしてみる（第六へ）。",
+                    ],
+                    quote: "身を十二に修して、無明種を拔く。業生すでに除いて、無言に果を得。",
+                },
+                6: {
+                    kanji: "六",
+                    name: "六. 他者を慈しむ心",
+                    jname: "他縁大乗心",
+                    yomi: "たえんだいじょうしん",
+                    view: "ここから見ると、他者の痛みが自分にも響いていることがわかります。大切な人も、知らない誰かも含めて、境界が融けていく。世界はもう、他人事ではありません。",
+                    now: "心が他者へ向かって開いています。空海の言う「他を縁じる」心であり、ここが大乗の入口です。",
+                    light: "共感と献身。他者のために自分を差し出せる。",
+                    shadow: "共感疲労。「助ける私」に執着する。",
+                    practices: [
+                        "ご縁の範囲を、身近な人からもう一回り広げてみる。",
+                        "「助ける側／助けられる側」という枠組み自体を一度手放す（第七へ）。",
+                    ],
+                    quote: "無縁に悲を起して、大悲はじめて発る。幻影に心を観じて、唯識境を遮す",
+                },
+                7: {
+                    kanji: "七",
+                    name: "七. 有を否定する心",
+                    jname: "覚心不生心",
+                    yomi: "かくしんふしょうしん",
+                    view: "ここから見ると、あらゆる物事が仮の足場でできていることがわかります。握りしめていたものを開くたびに、何事にも囚われない自由な風が通り抜けていきます。",
+                    now: "あらゆる物事への執着を見抜き、戯論（けろん）を手放す力が働いています。これは深い自由の入口です。",
+                    light: "柔軟さと自由。どんな枠組みにもとらわれない。",
+                    shadow: "ニヒリズム。「すべて空だ」が冷笑と停滞に変わる。",
+                    practices: [
+                        "すべてが移り変わる世界を愛おしく眺めてみる。",
+                        "否定の果てに見えてきた新しい感覚に留まってみる（第八へ）。",
+                    ],
+                    quote: "八不に戲を絶ち、一念に空を観ずれば、心原空寂にして、無相安楽なり。",
+                },
+                8: {
+                    kanji: "八",
+                    name: "八. 今を肯定する心",
+                    jname: "如実一道心",
+                    yomi: "にょじついちどうしん",
+                    view: "ここから見ると、この世界はすでに完成しています。何も足さない朝の光が、そのまま答えになっているかのように、この豊かな静けさを味わっています。",
+                    now: "否定の果てに、世界のありのままを肯定する眼差しが芽生えています。何もない朝の光に完全さを見る心です。",
+                    light: "平安と受容。世界をそのまま迎え入れる。",
+                    shadow: "静寂への逃避。「一」に留まったまま、動かなくなる。",
+                    practices: [
+                        "自分のまわりの身近な物が、どこからやってきたのかに思いを馳せる。",
+                        "静けさの中に、無数の関係性の広がりを見る（第九へ）。",
+                    ],
+                    quote: "一如本浄にて、境智倶に融ず。この心性を知るを、号して遮那という。",
+                },
+                9: {
+                    kanji: "九",
+                    name: "九. 宇宙に気づく心",
+                    jname: "極無自性心",
+                    yomi: "ごくむじしょうしん",
+                    view: "ここから見ると、この世界のあらゆるものが互いにつながり、影響しあって存在しています。ひとつの出来事の中に、世界の全体が映りこんでいるのです。",
+                    now: "自分自身も無数の関係の結び目であり、相互に映しあうように世界が見えています。空海が顕教の頂点に置いた心です。",
+                    light: "縁を編む力。ひとりでは起きないことが、場に起きはじめる。",
+                    shadow: "自己の拡散。関係性のなかで、自分を見失う。",
+                    practices: [
+                        "早朝、言葉の生まれる前の世界の音を聴く。",
+                        "自分の身体、言葉、心は宇宙の動きそのものの顕れだと気づく（第十へ）。",
+                    ],
+                    quote: "水は自性なし、風に遇うてすなわち波たつ。法界は極にあらず、警を蒙つてたちまちに進む。",
+                },
+                10: {
+                    kanji: "十",
+                    name: "十. 宇宙を生きる心",
+                    jname: "秘密荘厳心",
+                    yomi: "ひみつしょうごんしん",
+                    view: "ここは、見るための場所ではありません。あなたの身体が動き、言葉が生まれ、心が世界と響き合う ― その一挙一動が、そのまま宇宙のはたらきになる場所です。",
+                    now: "あなたの中で、世界と互いに入り合い、ひとつとなって動く回路が開いています。空海はこれを入我我入と呼びました。ただし、この心に「到達」はありません。開かれ続ける方向だけがあります。",
+                    light: "荘厳の感覚。日々の所作がそのまま祈りになる。",
+                    shadow: "秘密主義。言葉にならない感覚を抱え、宇宙に閉じこもる。",
+                    practices: [
+                        "受け取った響きを、形にして分かち合う。",
+                        "すべての存在が、十住心のグラデーションにあることを観る。",
+                    ],
+                    quote: "顕薬は塵を払い、真言庫を開く。秘宝たちまちに陳して、万徳すなわち証す。",
+                },
+            };
+
+            /* v:住心番号, t:項目タイプ(A=コア, B=価値, C=行動, D=弁別), r:逆転 */
+            const ITEMS = [
+                {
+                    v: 1,
+                    t: "A",
+                    q: "強い欲求（食欲・快楽・スマホなど）に、一日の流れを持っていかれることがある。",
+                },
+                {
+                    v: 1,
+                    t: "C",
+                    q: "この一週間、「あとで後悔する」とわかっていながら、目先の快楽に流された場面があった。",
+                },
+                {
+                    v: 1,
+                    t: "D",
+                    q: "退屈や不安をまぎらわすために、何かを消費して（食べて・買って・眺めて）しまう。",
+                },
+                {
+                    v: 2,
+                    t: "A",
+                    q: "誰も見ていなくても、「善くありたい」という感覚が働く。",
+                },
+                {
+                    v: 2,
+                    t: "C",
+                    q: "この一ヶ月、頼まれてもいない小さな親切を、自分から行った。",
+                },
+                {
+                    v: 2,
+                    t: "D",
+                    q: "損得を抜きにして、正しいと思うことを選んだ場面があった。",
+                },
+                {
+                    v: 3,
+                    t: "A",
+                    q: "自分を超えた大きな存在に、委ねたいという気持ちがある",
+                },
+                {
+                    v: 3,
+                    t: "C",
+                    q: "この一ヶ月、自分を超えた大きな存在に祈る時間を実際に持った。",
+                },
+                {
+                    v: 3,
+                    t: "D",
+                    q: "「いつかきっと救われるだろう」という希望が、いまの支えになっている。",
+                },
+                {
+                    v: 4,
+                    t: "A",
+                    q: "感情が湧いたとき、それを一時的に通り過ぎる現象として眺める。",
+                },
+                {
+                    v: 4,
+                    t: "C",
+                    q: "この一ヶ月、自分の思考や感情を観察する実践（瞑想・ジャーナリングなど）を行った。",
+                },
+                {
+                    v: 4,
+                    t: "D",
+                    q: "「わたし」と呼んでいるものは、感覚や記憶が集まってできているように感じる。",
+                },
+                {
+                    v: 5,
+                    t: "A",
+                    q: "苦しみには必ず原因があり、それを見つけることができると思う。",
+                },
+                {
+                    v: 5,
+                    t: "C",
+                    q: "この一ヶ月、苦しみのパターンの原因を特定し、具体的に対処した。",
+                },
+                {
+                    v: 5,
+                    t: "D",
+                    q: "苦しみを繰り返さないために、自分の考え方や生活を実際に変えたことがある。",
+                },
+                {
+                    v: 6,
+                    t: "A",
+                    q: "自分の学びや成長は、最終的には誰かのためにあると感じる。",
+                },
+                {
+                    v: 6,
+                    t: "C",
+                    q: "この一ヶ月、自分の時間・お金・労力を、実際に誰かのために使った。",
+                },
+                {
+                    v: 6,
+                    t: "D",
+                    q: "誰かの苦しみを知ったとき、自分に何ができるかを考えてしまう。",
+                },
+                {
+                    v: 7,
+                    t: "A",
+                    q: "「心のあり方が現実をつくる」という考え方すら、強く握りしめれば囚われになると思う。",
+                },
+                {
+                    v: 7,
+                    t: "C",
+                    q: "この一ヶ月、自分の「正しさ」へのこだわりに気づき、実際にそれを手放した場面があった。",
+                },
+                {
+                    v: 7,
+                    t: "D",
+                    q: "長年大切にしてきた考えや肩書きでも、時が来れば手放せる気がする。",
+                },
+                {
+                    v: 8,
+                    t: "A",
+                    q: "何もしていない時間の中に、すでに完全さを感じることがある。",
+                },
+                {
+                    v: 8,
+                    t: "C",
+                    q: "この一ヶ月、目的も評価もない「ただある」時間を、意識的に持った。",
+                },
+                {
+                    v: 8,
+                    t: "D",
+                    q: "深い静けさを味わったあとも、日常に戻って淡々と手を動かせる。",
+                },
+                {
+                    v: 9,
+                    t: "A",
+                    q: "自分は独立した個というより、無数の関係の結び目だと実感する。",
+                },
+                {
+                    v: 9,
+                    t: "B",
+                    q: "ひとつひとつの物事が、世界全体を反映していると感じる瞬間がある。",
+                },
+                {
+                    v: 9,
+                    t: "C",
+                    q: "この一ヶ月、「これは自分の成果ではなく、ご縁の産物だ」と心から思えた出来事があった。",
+                },
+                {
+                    v: 10,
+                    t: "A",
+                    q: "何かに深く没入して、「自分がしている」というより「自分を通して起きている」と感じた時間があった。",
+                },
+                {
+                    v: 10,
+                    t: "C",
+                    q: "この一ヶ月、食べる・歩く・書くといった日々の所作が、そのまま祈りや修行になっていると感じた時間があった。",
+                },
+                {
+                    v: 10,
+                    t: "D",
+                    q: "日常のふとした瞬間に、世界と自分の境目がなくなるように感じることがある。",
+                },
+                {
+                    v: "L",
+                    t: "L",
+                    q: "私はこれまで一度も、人を妬んだことがない。",
+                },
+                { v: "L", t: "L", q: "私はこれまで一度も、嘘をついたことがない。" },
+            ];
+
+            const SCALE = [
+                [1, "まったく当てはまらない"],
+                [2, "あまり当てはまらない"],
+                [3, "どちらともいえない"],
+                [4, "やや当てはまる"],
+                [5, "とても当てはまる"],
+            ];
+
+            /* ================= データ送信 ================= */
+            const ENDPOINT =
+                "https://script.google.com/macros/s/AKfycbyyHBygIYgQkBnseMpHG_gkEW21N3f7nYuFvSsHsAD0cFNW6Yp3jJpUqaiaz5mRbSKD/exec";
+            const VERSION = "v4.3";
+            function sendData(score, lsum) {
+                try {
+                    const payload = {
+                        version: VERSION,
+                        answers: answers.slice(), // 32問の素点(ITEMS定義順)
+                        scores: Array.from(
+                            { length: 10 },
+                            (_, i) => +score[i + 1].toFixed(2),
+                        ),
+                        lsum: lsum,
+                    };
+                    fetch(ENDPOINT, {
+                        method: "POST",
+                        mode: "no-cors", // Apps ScriptのCORS制約回避
+                        headers: { "Content-Type": "text/plain" }, // preflightを発生させない
+                        body: JSON.stringify(payload),
+                    }).catch(() => {});
+                } catch (e) {
+                    /* 送信失敗しても結果表示は止めない */
+                }
+            }
+
+            /* ================= 状態 ================= */
+            let order = [],
+                idx = 0;
+            const answers = new Array(ITEMS.length).fill(null);
+
+            function shuffle(a) {
+                for (let i = a.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [a[i], a[j]] = [a[j], a[i]];
+                }
+                return a;
+            }
+            function show(id) {
+                document
+                    .querySelectorAll(".screen")
+                    .forEach((s) => s.classList.remove("active"));
+                document.getElementById(id).classList.add("active");
+                window.scrollTo({ top: 0 });
+            }
+
+            /* 導入画面の十色ドット */
+            (function () {
+                const d = document.getElementById("introDots");
+                if (d)
+                    d.innerHTML =
+                        Array.from(
+                            { length: 9 },
+                            (_, i) =>
+                                `<i style="background:#C9A227"></i>`,
+                        ).join("") +
+                        `<i style="background:#C9A227"></i>`;
+            })();
+
+            /* ================= 出題 ================= */
+            function startQuiz() {
+                order = shuffle(ITEMS.map((_, i) => i));
+                idx = 0;
+                show("quiz");
+                renderQ();
+            }
+            function renderQ() {
+                const item = ITEMS[order[idx]];
+                document.getElementById("qcount").textContent =
+                    `${idx + 1} / ${ITEMS.length}`;
+                document.getElementById("pbar").style.width =
+                    `${(idx / ITEMS.length) * 100}%`;
+                document.getElementById("qtext").textContent = item.q;
+                document.getElementById("backBtn").style.visibility =
+                    idx === 0 ? "hidden" : "visible";
+                const box = document.getElementById("opts");
+                box.innerHTML = "";
+                const current = answers[order[idx]];
+                SCALE.forEach(([val, label]) => {
+                    const b = document.createElement("button");
+                    b.className = "opt" + (current === val ? " picked" : "");
+                    b.innerHTML = `<small>${val}</small>${label}`;
+                    b.onclick = () => pick(val, b);
+                    box.appendChild(b);
+                });
+            }
+            function pick(val, btn) {
+                answers[order[idx]] = val;
+                document
+                    .querySelectorAll(".opt")
+                    .forEach((o) => o.classList.remove("picked"));
+                btn.classList.add("picked");
+                setTimeout(() => {
+                    idx + 1 < ITEMS.length ? (idx++, renderQ()) : finish();
+                }, 170);
+            }
+            function goBack() {
+                if (idx > 0) {
+                    idx--;
+                    renderQ();
+                }
+            }
+            document.addEventListener("keydown", (e) => {
+                if (
+                    !document
+                        .getElementById("quiz")
+                        .classList.contains("active")
+                )
+                    return;
+                const n = parseInt(e.key, 10);
+                if (n >= 1 && n <= 5) {
+                    const btns = document.querySelectorAll(".opt");
+                    pick(n, btns[n - 1]);
+                }
+            });
+
+            /* ================= 採点 ================= */
+            function finish() {
+                document.getElementById("pbar").style.width = "100%";
+                const sums = {},
+                    abs = {},
+                    cs = {};
+                let l = 0;
+                for (let k = 1; k <= 10; k++) {
+                    sums[k] = [];
+                    abs[k] = [];
+                    cs[k] = null;
+                }
+                ITEMS.forEach((it, i) => {
+                    let a = answers[i];
+                    if (a == null) a = 3;
+                    if (it.v === "L") {
+                        l += a;
+                        return;
+                    }
+                    if (it.r) a = 6 - a;
+                    sums[it.v].push(a);
+                    if (it.t === "A" || it.t === "B") abs[it.v].push(a);
+                    if (it.t === "C") cs[it.v] = a;
+                });
+                const score = {},
+                    gap = {};
+                for (let k = 1; k <= 10; k++) {
+                    score[k] =
+                        sums[k].reduce((x, y) => x + y, 0) / sums[k].length;
+                    gap[k] =
+                        abs[k].reduce((x, y) => x + y, 0) / abs[k].length -
+                        cs[k];
+                }
+                document.body.classList.add("night");   // 顕から密へ: 画面が暮れる
+                sendData(score, l);
+                lastScore = score;
+                renderResult(score, gap, l);
+                show("result");
+            }
+
+            /* ================= 結果描画 ================= */
+            /* ================= 曼荼羅の位置と観想 ================= */
+            function viewerPos(score, C, R) {
+                const BETA = 3.0;
+                let x = 0, y = 0, w = 0;
+                for (let k = 1; k <= 9; k++) {
+                    const wt = Math.exp(BETA * score[k]);
+                    const a = ((-90 + (k - 1) * 40) * Math.PI) / 180;
+                    x += (C + R * Math.cos(a)) * wt;
+                    y += (C + R * Math.sin(a)) * wt;
+                    w += wt;
+                }
+                x /= w; y /= w;
+                const sink = Math.pow((score[10] - 1) / 4, 1.6) * 0.8;
+                return [x + (C - x) * sink, y + (C - y) * sink];
+            }
+            function homeSeat(score) {
+                const ranked = Object.keys(score).map(Number).sort((a, b) => score[b] - score[a]);
+                const nearest = ranked.filter(k => k <= 9)[0];
+                return (score[10] >= 4.3 && score[10] >= score[nearest]) ? 10 : nearest;
+            }
+            function openDetail(k) {
+                const d = document.querySelectorAll("#allminds details")[k - 1];
+                if (d) { d.open = true; d.scrollIntoView({ behavior: "smooth", block: "start" }); }
+            }
+            function enterMind(k, isHome) {
+                const m = MINDS[k];
+                const v = document.getElementById("view");
+                v.style.setProperty("--accent", HUES[k]);
+                v.innerHTML = `
+    <div class="from">${isHome ? "いま、あなたの心がいる場所" : "ほかの場所からの風景"}</div>
+    <h3 style="color:${k === 10 ? "#EDE6D6" : HUES[k]}">${m.name}</h3>
+    <div class="jname">第${m.kanji}住心・${m.jname}（${m.yomi}）</div>
+    <p>${m.view}</p>
+    <button class="back" onclick="openDetail(${k})">この住心を詳しく知る →</button>
+    ${isHome ? "" : '<button class="back" style="margin-left:16px" onclick="enterMind(homeSeat(lastScore), true)">元の場所に戻る</button>'}`;
+                if (!isHome) v.scrollIntoView({ behavior: "smooth", block: "nearest" });
+            }
+
+            function renderResult(score, gap, lv) {
+                document.getElementById("lwarn").innerHTML =
+                    lv >= 8
+                        ? `<div class="warn">回答が「理想の自分」に寄っている可能性があります。時間をおいて「この一ヶ月の実際」で答え直すと、より正直な鏡になります。</div>`
+                        : "";
+
+                /* 重心の算出 */
+                const ranked = Object.keys(score).map(Number).sort((a, b) => score[b] - score[a]);
+                const top = ranked[0], second = ranked[1];
+                const dual = score[top] - score[second] <= 0.25;
+                document.documentElement.style.setProperty("--accent", HUES[top]);
+                const retry = document.getElementById("retryBtn");
+                retry.style.background = HUES[top];
+                retry.style.color = DARK_TEXT_OK[top] ? "#17171A" : "#fff";
+
+                /* 曼荼羅: 場そのもの=第十、九つの座、あなたの位置 */
+                const C = 195, R = 140, SEAT = 27;
+                const pt = (k, r = R) => {
+                    const a = ((-90 + (k - 1) * 40) * Math.PI) / 180;
+                    return [C + r * Math.cos(a), C + r * Math.sin(a)];
+                };
+                let defs = "", seats = "", fieldStops = "";
+                for (let k = 1; k <= 9; k++) fieldStops += `<stop offset="${(((k - 1) / 8) * 100).toFixed(0)}%" stop-color="${HUES[k]}"/>`;
+                defs += `<linearGradient id="field" x1="0" y1="0" x2="1" y2="1">${fieldStops}</linearGradient>`;
+                for (let k = 1; k <= 9; k++) {
+                    const [x, y] = pt(k);
+                    const glow = Math.pow((score[k] - 1) / 4, 1.8);
+                    defs += `<radialGradient id="g${k}"><stop offset="0%" stop-color="${HUES[k]}" stop-opacity="${(0.85 * glow).toFixed(2)}"/><stop offset="100%" stop-color="${HUES[k]}" stop-opacity="0"/></radialGradient>`;
+                    const shortName = MINDS[k].name.split(". ")[1] || MINDS[k].name;
+                    seats += `<g class="seat" onclick="enterMind(${k})" tabindex="0" role="button" aria-label="${shortName}の場所">
+      <circle cx="${x}" cy="${y}" r="81" fill="url(#g${k})"/>
+      <circle cx="${x}" cy="${y}" r="${SEAT + 12}" fill="transparent"/>
+      <text x="${x}" y="${y - 2}" fill="${HUES[k]}" font-size="16" font-weight="800" text-anchor="middle" dominant-baseline="central">${MINDS[k].kanji}</text>
+      <text x="${x}" y="${y + 17}" fill="#B3A88F" font-size="7.5" text-anchor="middle">${shortName}</text>
+    </g>`;
+                }
+                const [vx, vy] = viewerPos(score, C, R);
+                document.getElementById("chart").innerHTML = `
+  <svg viewBox="0 0 390 390" role="img" aria-label="十住心曼荼羅と、あなたの位置">
+    <defs>${defs}</defs>
+    <circle cx="${C}" cy="${C}" r="${R + SEAT + 18}" fill="url(#field)" opacity="0.055"/>
+    <circle cx="${C}" cy="${C}" r="${R + SEAT + 18}" fill="none" stroke="#3A342C" stroke-width="1.2"/>
+    <g class="seat" onclick="enterMind(10)" tabindex="0" role="button" aria-label="第十の場所">
+      <circle cx="${C}" cy="${C}" r="52" fill="transparent"/>
+      <text x="${C}" y="${C - 2}" fill="#C9A227" font-size="16" font-weight="800" text-anchor="middle" dominant-baseline="central">十</text>
+      <text x="${C}" y="${C + 17}" fill="#B3A88F" font-size="7.5" text-anchor="middle">${MINDS[10].name.split(". ")[1] || MINDS[10].name}</text>
+    </g>
+    ${seats}
+    <g pointer-events="none">
+      <circle cx="${vx.toFixed(1)}" cy="${vy.toFixed(1)}" r="8" fill="#EDE6D6" stroke="#23201C" stroke-width="2.6"/>
+      <text x="${vx.toFixed(1)}" y="${(vy - 16).toFixed(1)}" fill="#EDE6D6" font-size="11" font-weight="800" text-anchor="middle">あなた</text>
+    </g>
+  </svg>`;
+                /* 初期表示: いま立っている座からの風景 */
+                enterMind(homeSeat(score), true);
+
+
+                /* 十住心の一覧(開閉式) */
+                const _pk = homeSeat(score), _pm = MINDS[_pk], _pa = _pk === 10 ? "#17171A" : HUES[_pk];
+                document.getElementById("printSheet").innerHTML = `
+                    <div class="duo">
+                      <div><b style="color:${_pa};display:block;font-weight:800;margin-bottom:4px">光</b>${_pm.light}</div>
+                      <div><b style="color:#6E6E68;display:block;font-weight:800;margin-bottom:4px">影</b>${_pm.shadow}</div>
+                    </div>
+                    <div class="plabel" style="color:${_pa}">影への実践</div>
+                    <ul class="practice">${_pm.practices.map((p) => `<li>${p.replace(/（第[^）]*）/g, "")}</li>`).join("")}</ul>`;
+
+                document.getElementById("allminds").innerHTML =
+                    `<h2>十住心をすべて見る</h2>` +
+                    Array.from({ length: 10 }, (_, i) => {
+                        const k = i + 1,
+                            m = MINDS[k];
+                        return `<details class="card" style="--accent:${HUES[k]};padding:16px 20px">
+                      <summary style="cursor:pointer;font-weight:800;font-size:16px;list-style:none;display:flex;align-items:center;gap:10px">
+                        <span style="width:12px;height:12px;border-radius:50%;flex:none;background:#C9A227;box-shadow:inset 0 0 0 1px rgba(23,23,26,.15)"></span>
+                        ${m.name}
+                      </summary>
+                      <div style="margin-top:12px">
+                        <div class="jname">第${m.kanji}住心・${m.jname}（${m.yomi}）</div>
+                        <p style="font-size:13.5px">${m.view}</p>
+                        <div class="duo"><div><b style="color:${k === 10 ? '#EDE6D6' : HUES[k]}">光</b>${m.light}</div><div><b style="color:#9A938A">影</b>${m.shadow}</div></div>
+                        <div class="plabel" style="color:${k === 10 ? '#EDE6D6' : HUES[k]};font-size:12.5px">影への実践</div>
+                        <ul class="practice">${m.practices.map((p) => `<li>${p.replace(/（第[^）]*）/g, "")}</li>`).join("")}</ul>
+                      </div>
+                    </details>`;
+                    }).join("");
+            }
+
+            /* ================= 結果画像の保存 ================= */
+            let lastScore = null; // finish()内で lastScore = score; を追加すること
+
+            function printResult() {
+                document.body.classList.add("printing");
+                const done = () => {
+                    document.body.classList.remove("printing");
+                    window.removeEventListener("afterprint", done);
+                };
+                window.addEventListener("afterprint", done);
+                window.print();
+                setTimeout(done, 1500); // afterprintが発火しない環境の保険
+            }
+
+            async function saveResultImage() {
+                if (!lastScore) return;
+                const score = lastScore;
+                const ranked = Object.keys(score)
+                    .map(Number)
+                    .sort((a, b) => score[b] - score[a]);
+                const top = homeSeat(score);
+                const W = 1080,
+                    H = 1350;
+                const cv = document.createElement("canvas");
+                cv.width = W;
+                cv.height = H;
+                const ctx = cv.getContext("2d");
+                const F = (w) =>
+                    `${w} 'Hiragino Kaku Gothic ProN','Hiragino Sans',sans-serif`;
+                // ロゴは欧文フォント(トップのCSSと同じ字形に揃える)
+                const FE = (w) =>
+                    `${w} 'Helvetica Neue',Helvetica,Arial,sans-serif`;
+
+                // 背景
+                ctx.fillStyle = "#23201C";
+                ctx.fillRect(0, 0, W, H);
+                // ロゴ: 1 + 金リング(0) + MINDS。字形・間隔をトップと合わせる
+                ctx.font = FE("800 84px");
+                ctx.textAlign = "left";
+                const ringR = 26,          // 0の外形を1やMの字高に合わせる
+                    ringGapL = 1,          // 1-0 は密着(A案)
+                    ringGapR = 15;         // 0-M は広め(A案)
+                const w1 = ctx.measureText("1").width,
+                    wM = ctx.measureText("MINDS").width;
+                const total = w1 + ringGapL + ringR * 2 + ringGapR + wM,
+                    sx = (W - total) / 2,
+                    baseY = 130;
+                ctx.fillStyle = "#EDE6D6";
+                ctx.fillText("1", sx, baseY);
+                const rx = sx + w1 + ringGapL + ringR,
+                    ry = baseY - 27;       // 字の視覚中心に合わせる
+                ctx.beginPath();
+                ctx.arc(rx, ry, ringR, 0, Math.PI * 2);
+                ctx.strokeStyle = "#C9A227";
+                ctx.lineWidth = 12;
+                ctx.stroke();
+                ctx.fillStyle = "#EDE6D6";
+                ctx.fillText("MINDS", rx + ringR + ringGapR, baseY);
+                ctx.textAlign = "center";
+                ctx.font = F("700 30px");
+                ctx.fillStyle = "#B3A88F";
+                ctx.fillText("by 十住心論", W / 2, 182);
+
+                // 曼荼羅: 場そのもの=第十、九つの座、あなたの位置
+                const C = { x: W / 2, y: 500 }, R = 220, SEAT = 44;
+                const pt = (k, r = R) => {
+                    const a = ((-90 + (k - 1) * 40) * Math.PI) / 180;
+                    return [C.x + r * Math.cos(a), C.y + r * Math.sin(a)];
+                };
+                const alphaHex = (v) => Math.round(v * 255).toString(16).padStart(2, "0");
+                // 外周
+                ctx.beginPath();
+                ctx.arc(C.x, C.y, R + SEAT + 30, 0, 7);
+                ctx.strokeStyle = "#3A342C";
+                ctx.lineWidth = 2.4;
+                ctx.stroke();
+                // 座(にじみ + 月輪)
+                for (let k = 1; k <= 9; k++) {
+                    const [x, y] = pt(k);
+                    const glow = Math.pow((score[k] - 1) / 4, 1.8);
+                    const GR = 128; // 81px(SVG) を canvas スケールに換算
+                    const g = ctx.createRadialGradient(x, y, 0, x, y, GR);
+                    g.addColorStop(0, HUES[k] + alphaHex(0.85 * glow));
+                    g.addColorStop(1, HUES[k] + "00");
+                    ctx.beginPath();
+                    ctx.arc(x, y, GR, 0, 7);
+                    ctx.fillStyle = g;
+                    ctx.fill();
+                    ctx.fillStyle = HUES[k];
+                    ctx.font = F("800 30px");
+                    ctx.textBaseline = "middle";
+                    ctx.fillText(MINDS[k].kanji, x, y - 6);
+                    const shortName = MINDS[k].name.split(". ")[1] || MINDS[k].name;
+                    ctx.fillStyle = "#B3A88F";
+                    ctx.font = F("600 13px");
+                    ctx.fillText(shortName, x, y + 26);
+                }
+                // 中央の「十」
+                ctx.fillStyle = "#C9A227";
+                ctx.font = F("800 30px");
+                ctx.fillText("十", C.x, C.y - 6);
+                ctx.font = F("600 13px");
+                ctx.fillText(MINDS[10].name.split(". ")[1] || MINDS[10].name, C.x, C.y + 26);
+                // あなたの位置
+                const [vx, vy] = viewerPos(score, 0, R).map((v, i) => v + (i === 0 ? C.x : C.y));
+                ctx.beginPath();
+                ctx.arc(vx, vy, 14, 0, 7);
+                ctx.fillStyle = "#EDE6D6";
+                ctx.fill();
+                ctx.strokeStyle = "#23201C";
+                ctx.lineWidth = 4.5;
+                ctx.stroke();
+                ctx.fillStyle = "#EDE6D6";
+                ctx.font = F("800 20px");
+                ctx.fillText("あなた", vx, vy - 30);
+                ctx.textBaseline = "alphabetic";
+
+                // ---- 下半分: 座の名前 / 光と影 ----
+                const accent = top === 10 ? "#EDE6D6" : HUES[top];
+                // 折り返し描画のヘルパー
+                const wrapText = (text, x, y, maxW, lh) => {
+                    const chars = [...text];
+                    let line = "", yy = y;
+                    for (const ch of chars) {
+                        if (ctx.measureText(line + ch).width > maxW && line) {
+                            ctx.fillText(line, x, yy);
+                            yy += lh;
+                            line = ch;
+                        } else line += ch;
+                    }
+                    if (line) { ctx.fillText(line, x, yy); yy += lh; }
+                    return yy;
+                };
+
+                ctx.fillStyle = "#B3A88F";
+                ctx.font = F("600 22px");
+                ctx.fillText("いま、あなたの心がいる場所", W / 2, 910);
+
+                ctx.fillStyle = accent;
+                ctx.font = F("800 58px");
+                ctx.fillText(MINDS[top].name, W / 2, 980);
+                ctx.fillStyle = "#B3A88F";
+                ctx.font = F("600 26px");
+                ctx.fillText(`第${MINDS[top].kanji}住心・${MINDS[top].jname}`, W / 2, 1025);
+
+                // 区切り線
+                ctx.beginPath();
+                ctx.moveTo(180, 1065);
+                ctx.lineTo(W - 180, 1065);
+                ctx.strokeStyle = "#3A342C";
+                ctx.lineWidth = 2;
+                ctx.stroke();
+
+                // 光
+                const PAD = 110, MAXW = W - PAD * 2 - 70;
+                ctx.textAlign = "left";
+                ctx.fillStyle = accent;
+                ctx.font = F("800 28px");
+                ctx.fillText("光", PAD, 1130);
+                ctx.fillStyle = "#EDE6D6";
+                ctx.font = F("500 25px");
+                let yy = wrapText(MINDS[top].light, PAD + 60, 1130, MAXW, 40);
+
+                // 影
+                yy += 22;
+                ctx.fillStyle = "#9A938A";
+                ctx.font = F("800 28px");
+                ctx.fillText("影", PAD, yy);
+                ctx.fillStyle = "#EDE6D6";
+                ctx.font = F("500 25px");
+                yy = wrapText(MINDS[top].shadow, PAD + 60, yy, MAXW, 40);
+
+                ctx.textAlign = "center";
+                ctx.fillStyle = "#6E6E68";
+                ctx.font = F("500 20px");
+                ctx.fillText("10minds.netlify.app", W / 2, 1315);
+
+                // 保存(スマホは共有シート、PCはダウンロード)
+                cv.toBlob(async (blob) => {
+                    const file = new File([blob], "10minds.png", {
+                        type: "image/png",
+                    });
+                    if (
+                        /iPhone|iPad|Android/i.test(navigator.userAgent) &&
+                        navigator.canShare &&
+                        navigator.canShare({ files: [file] })
+                    ) {
+                        try {
+                            await navigator.share({ files: [file] });
+                            return;
+                        } catch (e) {}
+                    }
+                    const a = document.createElement("a");
+                    a.href = URL.createObjectURL(blob);
+                    a.download = "10minds.png";
+                    a.click();
+                });
+            }
+        </script>
+    </body>
+</html>
