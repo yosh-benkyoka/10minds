@@ -148,9 +148,10 @@
             }
 
             h1 {
-                font-size: 22px;
+                font-size: 26px;
                 font-weight: 800;
                 text-align: center;
+                letter-spacing: 0.03em;
                 letter-spacing: 0.03em;
             }
             .lede {
@@ -553,7 +554,7 @@
         </style>
         <style>
             @media (max-width: 360px) {
-                h1 { font-size: 20px; letter-spacing: 0.02em; }
+                h1 { font-size: 23px; letter-spacing: 0.02em; }
             }
         </style>
     </head>
@@ -567,8 +568,8 @@
                     ><span class="sr">0</span>MINDS
                 </div>
                 <p class="byline">by 空海『十住心論』</p>
-                <h1>あなたの心は、いまどこに？</h1>
-                <p class="lede" style="margin-top:26px">これは、優劣をつけるテストではありません。<br><br>
+                <h1>心はいま、どのあたり？</h1>
+                <p class="lede" style="margin-top:42px">これは、優劣をつけるテストではありません。<br><br>
                     いまから約1200年前、空海は『十住心論』で、人の心が開いていく<b>10のグラデーション</b>を描きました。それは、日によって、場面によって、大きく変わるものです。<br><br>
                     32の質問に、「理想の自分」ではなく<b>「この一ヶ月の実際の自分」</b>で答えてください。正解はありません。終わったとき、あなたの心の今の場所が浮かびあがってきます。（所要時間 約5分）</p>
                 <button class="btn-primary" onclick="startQuiz()">
@@ -668,7 +669,7 @@
                     もう一度はじめから
                 </button>
                 <p class="footer-note">
-                    10MINDS by 十住心論 v4.3(32問)<br /><br />このアプリは勉強家の兼松佳宏の試作品です。掲載情報は探究中のメモのようなものであり、学術的に保証されているわけではありません。あくまでひとつのアイデアとして、お楽しみください。
+                    10MINDS by 十住心論 v4.4(32問)<br /><br />このアプリは勉強家の兼松佳宏の試作品です。掲載情報は探究中のメモのようなものであり、学術的に保証されているわけではありません。あくまでひとつのアイデアとして、お楽しみください。
                 </p>
             </section>
         </div>
@@ -1002,7 +1003,7 @@
             /* ================= データ送信 ================= */
             const ENDPOINT =
                 "https://script.google.com/macros/s/AKfycbyyHBygIYgQkBnseMpHG_gkEW21N3f7nYuFvSsHsAD0cFNW6Yp3jJpUqaiaz5mRbSKD/exec";
-            const VERSION = "v4.3";
+            const VERSION = "v4.4";
             function sendData(score, lsum) {
                 try {
                     const payload = {
@@ -1343,7 +1344,7 @@
                 ctx.textAlign = "center";
                 ctx.font = F("700 30px");
                 ctx.fillStyle = "#B3A88F";
-                ctx.fillText("by 十住心論", W / 2, 182);
+                ctx.fillText("by 空海『十住心論』", W / 2, 182);
 
                 // 曼荼羅: 場そのもの=第十、九つの座、あなたの位置
                 const C = { x: W / 2, y: 500 }, R = 220, SEAT = 44;
