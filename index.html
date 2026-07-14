@@ -1238,11 +1238,12 @@
                     .sort((a, b) => (score[b] - score[a]) || (b - a));
             }
             /* 上位2つの動詞を連結した一句 */
-            const RENYOU = {1:"応え",2:"律し",3:"祈り",4:"払い",5:"断ち",6:"慈しみ",7:"否定し",8:"肯定し",9:"気づき",10:"生き"};
-            const TAIL   = {1:"応えている",2:"律している",3:"祈っている",4:"払っている",5:"断っている",6:"慈しんでいる",7:"否定している",8:"肯定している",9:"気づいている",10:"生きている"};
-            function comboPhrase(a, b) { return `${RENYOU[a]}ながら、${TAIL[b]}`; }
-            /* 3動詞連結: [3位]、[2位]ながら、[1位]ている (後半に重き) */
-            function comboPhrase3(a, b, c) { return `${RENYOU[c]}、${RENYOU[b]}ながら、${TAIL[a]}`; }
+            /* beの肩書き: 結果名 = 冠句(3位)、気象(2位)の場所(1位) — 10×9×8=720通り */
+            const PLACE = {1:"原野",2:"里",3:"寺院",4:"広場",5:"絶壁",6:"渡し場",7:"湖",8:"道",9:"海",10:"曼荼羅"};
+            const WX    = {1:"陽炎",2:"春風",3:"光芒",4:"蒼天",5:"雪明かり",6:"夕暮れ",7:"凪",8:"朝焼け",9:"朝露",10:"月明かり"};
+            const PH3   = {1:"生命力に満ちた",2:"役に立つことで喜ぶ",3:"救いに満たされる",4:"囚われが解かれる",5:"洞察にふける",6:"自他の幸せを願う",7:"鏡のように静かな",8:"あるがままにそこにある",9:"お互いを照らしあう",10:"曼荼羅の世界にある"};
+            /* be-title: [3位の冠句]、[2位の気象]の[1位の場所] */
+            function comboPhrase3(a, b, c) { return `${PH3[c]}、${WX[b]}の${PLACE[a]}`; }
             function homeSeat(score) {
                 const nearest = rankMinds(score, 9)[0];
                 return (score[10] >= 4.3 && score[10] >= score[nearest]) ? 10 : nearest;
@@ -1323,7 +1324,14 @@
                 /* 上部の一句(3動詞連結・ゴシック) */
                 const t3 = topMinds(score, 3);
                 const pEl = document.getElementById("phraseTop");
-                pEl.textContent = comboPhrase3(t3[0], t3[1], t3[2]);
+                const nameText = comboPhrase3(t3[0], t3[1], t3[2]);
+                pEl.textContent = nameText;
+                /* 文字数に応じた決定的サイズ(ループなし): 最長20字でも1行に */
+                const availW = (pEl.parentElement && pEl.parentElement.clientWidth > 40)
+                    ? pEl.parentElement.clientWidth
+                    : document.documentElement.clientWidth - 44;
+                const fs = Math.min(20, Math.floor((availW - 8) / (nameText.length * 1.06)));
+                pEl.style.fontSize = Math.max(13, fs) + "px";
 
                 /* いま、あなたの心がいる3つの場所 */
                 document.getElementById("blend").innerHTML = t3.map(k => {
