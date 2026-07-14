@@ -148,11 +148,11 @@
             }
 
             h1 {
-                font-size: 26px;
+                font-size: clamp(18px, 6.0vw, 25px);
                 font-weight: 800;
                 text-align: center;
-                letter-spacing: 0.03em;
-                letter-spacing: 0.03em;
+                letter-spacing: 0.02em;
+                white-space: nowrap;
             }
             .lede {
                 font-size: 15px;
@@ -558,7 +558,7 @@
         </style>
         <style>
             @media (max-width: 360px) {
-                h1 { font-size: 23px; letter-spacing: 0.02em; }
+                
             }
         </style>
         <style>
@@ -597,13 +597,16 @@
                     ><span class="sr">0</span>MINDS
                 </div>
                 <p class="byline">by 空海『十住心論』</p>
-                <h1>心はいま、どのあたり？</h1>
-                <p class="lede" style="margin-top:42px">これは、優劣をつけるテストではありません。<br><br>
-                    いまから約1200年前、空海は『十住心論』で、人の心が開いていく<b>10のグラデーション</b>を描きました。それは、日によって、場面によって、大きく変わるものです。<br><br>
-                    32の質問に、「理想の自分」ではなく<b>「この一ヶ月の実際の自分」</b>で答えてください。正解はありません。終わったとき、あなたの心の今の場所が浮かびあがってきます。（所要時間 約5分）</p>
+                <h1>心の現在地を、たしかめる。</h1>
+                <p class="lede" style="margin-top:42px">いまから約1200年前、空海は『十住心論』という著書で、人の心が開いていく<b>10のグラデーション</b>を描きました。日によって、場面によって、心は動きつづけます。その"現在地"を映し出すのが、心の診断ツール「10MINDS」です。<br><br>
+                    診断結果は、優劣ではなく"場所"。友人と違う結果が出たとき、それは「いま見えている景色の違い」です。比べてみると、お互いのことが少しわかるかもしれません。<br><br>
+                    32の質問に、「理想の自分」ではなく<b>「この一ヶ月の実際の自分」</b>で答えてください。3ヶ月後のあなたは、たぶん別の場所にいます。（所要時間 約5分）</p>
                 <button class="btn-primary" onclick="startQuiz()">
                     はじめる
                 </button>
+                <p style="text-align:center;margin-top:18px">
+                    <a href="javascript:void(0)" onclick="openBrowse()" style="color:inherit;font-size:12.5px;text-decoration:underline;text-underline-offset:4px">「十住心」をすべて見る →</a>
+                </p>
                 <p class="note" style="font-size: 11px">
                     回答は匿名のまま、統計データとして送信されます。氏名・連絡先など、個人を特定する情報は一切含まれません。結果はこの画面だけに表示され、ページを閉じると消えます。
                 </p>
@@ -702,6 +705,20 @@
                 <p class="footer-note">
                     10MINDS by 十住心論 v5.0(32問)<br /><br />このアプリは勉強家の兼松佳宏の試作品です。掲載情報は探究中のメモのようなものであり、学術的に保証されているわけではありません。あくまでひとつのアイデアとして、お楽しみください。
                 </p>
+            </section>
+
+            <!-- 十住心の図鑑(トップから閲覧) -->
+            <section id="browse" class="screen">
+                <div class="logo" style="font-size: 40px; margin-top: 48px">
+                    1<span class="ring" style="width: 32px; height: 32px; margin: 0 6px 0 0"></span
+                    >MINDS
+                </div>
+                <p class="byline">by 空海『十住心論』</p>
+                <p class="lede" style="text-align:center;margin-top:26px;color:#C9A227">空海が描いた、心の10のグラデーション<br>上も下もなく、すべてがあなたの中に。</p>
+                <div id="allminds-browse" style="margin-top:30px"></div>
+                <button class="btn-primary" onclick="closeBrowse()" style="margin-top:40px;background:#C9A227;color:#23201C;border-color:#C9A227">
+                    トップに戻る
+                </button>
             </section>
         </div>
         <script>
@@ -1091,6 +1108,17 @@
             })();
 
             /* ================= 出題 ================= */
+            function openBrowse() {
+                document.getElementById("allminds-browse").innerHTML = allMindsHTML();
+                document.body.classList.add("night");   // 墨の空気で読む
+                show("browse");
+                window.scrollTo(0, 0);
+            }
+            function closeBrowse() {
+                document.body.classList.remove("night");
+                show("intro");
+                window.scrollTo(0, 0);
+            }
             function startQuiz() {
                 order = shuffle(ITEMS.map((_, i) => i));
                 idx = 0;
@@ -1322,8 +1350,12 @@
                     </div>`;
                 }).join("");
 
-                document.getElementById("allminds").innerHTML =
-                    `<h2>十住心をすべて見る</h2>` +
+                document.getElementById("allminds").innerHTML = allMindsHTML();
+            }
+
+            /* 十住心一覧のHTML(結果画面と図鑑画面で共用) */
+            function allMindsHTML() {
+                return `<h2>十住心をすべて見る</h2>` +
                     Array.from({ length: 10 }, (_, i) => {
                         const k = i + 1,
                             m = MINDS[k];
